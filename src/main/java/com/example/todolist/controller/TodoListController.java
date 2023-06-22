@@ -47,12 +47,13 @@ public class TodoListController {
 		
 	} catch (Exception e) {
 		e.printStackTrace();
+		return "bbs/created";
 	}
 		return "redirect:/list";
 	}
 	
 	@RequestMapping(value ="/list", method = {RequestMethod.GET, RequestMethod.POST})
-	public String list(TodoList todolist, HttpServletRequest request, Model model) {
+	public String list(TodoList todolist,  HttpServletRequest request, Model model) {
 		try {
 			String pageNum = request.getParameter("pageNum");
 			int currentPage = 1;
@@ -90,7 +91,8 @@ public class TodoListController {
 				param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8"); //컴퓨터의 언어로 인코딩
 			}
 			String listUrl = "/list";
-	if(!param.equals("")) listUrl += "?" + param;
+			
+			if(!param.equals("")) listUrl += "?" + param;
 			
 			String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
 			
@@ -110,5 +112,37 @@ public class TodoListController {
 		}
 		return "bbs/list"; 
 
+	}
+	
+	@RequestMapping(value= "/article", method = RequestMethod.GET)
+	public String article(HttpServletRequest request, Model model) {
+		try {
+			int num = Integer.parseInt(request.getParameter("num"));
+			String pageNum = request.getParameter("pageNum");
+			String searchKey = request.getParameter("searchKey");
+			String searchValue = request.getParameter("searchValue");
+			
+			if(searchValue != null) {
+				searchValue = URLDecoder.decode(searchValue, "UTF-8");
+			}
+			
+			TodoList todolist = todolistService.getReadData(num);
+			
+			if(todolist == null) {
+				return "redirect:/list?pageNum=" + pageNum;
+			}
+			String param = "pageNum=" + pageNum;
+			if(searchValue != null && !searchValue.equals("")) {
+				//검색어가 있다면
+				param += "&searchKey=" + searchKey;
+				param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8"); //컴퓨터의 언어로 인코딩
+			}
+			model.addAttribute("todolist", todolist);
+			model.addAttribute("params", param);
+			model.addAttribute("pageNum", pageNum);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "bbs/article";
 	}
 }

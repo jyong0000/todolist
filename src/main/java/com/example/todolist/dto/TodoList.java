@@ -12,5 +12,4 @@ public class TodoList {
 	private String subject;
 	private String content;
 	private String dd;
-	private int hitCount;
 }

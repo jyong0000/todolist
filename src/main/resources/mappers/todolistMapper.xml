@@ -5,6 +5,48 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace = " com.example.todolist.dao.TodoListDao">
+<mapper namespace="com.example.todolist.dao.TodoListDao">
+	<select id="maxNum" resultType="int">
+		select nvl(max(num), 0) from
+		todolist
+	</select>
 
+	<insert id="insertData" parameterType="TodoList">
+		insert into todolist
+		values(#{num}, #{name}, #{pwd},
+		#{subject}, #{content}, #{dd})
+	</insert>
+
+	<select id="getDataCount" parameterType="map" resultType="int">
+		select nvl(count(*),0) from todolist where ${searchKey} like '%' || #{searchValue} || '%' 
+	</select>
+
+	<select id="getLists" parameterType="map" resultType="TodoList">
+		select *
+		from (
+		select data.* from (
+		select num, name, subject, content, dd
+		from
+		todolist
+		where ${searchKey} like '%' || #{searchValue} || '%'
+		order by
+		num desc
+		) data
+		)
+	</select>
+
+	<select id="getReadData" parameterType="int"
+		resultType="TodoList">
+		select * from todolist where num = #{num}
+	</select>
+
+	<update id="updateData" parameterType="TodoList">
+		update todolist set
+		name=#{name}, pwd=#{pwd}, subject=#{subject}, content= #{content}
+		where num = #{num}
+	</update>
+
+	<delete id="deleteData" parameterType="int">
+		delete todolist where num = #{num}
+	</delete>
 </mapper>

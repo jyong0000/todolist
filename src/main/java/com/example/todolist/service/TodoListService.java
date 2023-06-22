@@ -1,6 +1,7 @@
 package com.example.todolist.service;
 
 import java.util.List;
+
 import com.example.todolist.dto.TodoList;
 
 public interface TodoListService {
@@ -12,7 +13,11 @@ public interface TodoListService {
 
 	public List<TodoList> getLists(String searchKey, String searchValue, int start, int end) throws Exception;
 
+	public TodoList getReadData(int num) throws Exception;
 	
+	public void updateData(TodoList todolist) throws Exception;
+	
+	public void deleteData(int num) throws Exception;
 	
 	
 }

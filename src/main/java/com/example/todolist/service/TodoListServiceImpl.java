@@ -16,26 +16,37 @@ public class TodoListServiceImpl implements TodoListService{
 
 	@Override
 	public int maxNum() throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		return todolistMapper.maxNum();
 	}
 
 	@Override
-	public void insertDate(TodoList todolist) {
-		// TODO Auto-generated method stub
-		
+	public void insertDate(TodoList todolist) throws Exception {
+		todolistMapper.insertData(todolist);
 	}
 
 	@Override
 	public int getDataCount(String searchKey, String searchValue) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		return todolistMapper.getDataCount(searchKey, searchValue);
 	}
 
 	@Override
 	public List<TodoList> getLists(String searchKey, String searchValue, int start, int end) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return todolistMapper.getLists(searchKey, searchValue, start, end);
+	}
+
+	@Override
+	public TodoList getReadData(int num) throws Exception {
+		return todolistMapper.getReadData(num);
+	}
+
+	@Override
+	public void updateData(TodoList todolist) throws Exception {
+		todolistMapper.updateData(todolist);
+	}
+
+	@Override
+	public void deleteData(int num) throws Exception {
+		todolistMapper.deleteData(num);
 	}
 
 }
