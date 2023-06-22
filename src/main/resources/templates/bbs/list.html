@@ -1,26 +1,30 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layouts/layout}">
-<head>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" type="text/css" href="css/list.css"/>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/list.css">
     
     <title>TODO-List</title>
-</head>
-<body>
+
     <div class="todo-wrapper">
         <div class="todo-title">Todo-list</div>
         <div class="todo-box">   
             <ul class="todo-list">
                 <li class="todo-item">
-                    <div class="todo"><a href="|@{${articleUrl}}&num=@{${todolist.num}}|" th:text= "${todolist.subject}"
-                   ></a></div>
+                   <div class="todo" th:if="${#lists.size(lists)}>0" th:each="todolist:${lists}"
+                   >
+                 <a th:href="|@{${articleUrl}}&num=@{${todolist.num}}|" th:text="${todolist.subject}"></a>
+                   </div>
                     <button class="delBtn">x</button>
                 </li>
-            </ul>
+		</ul>
+			<tr th:if="${#lists.size(dataCount)} > 0"
+				th:each="dataCount:${dataCount}">
+				<td colspan="5" id="footer"><a th:utext="${pageIndexList}"></a>
+				</td>
+			</tr>
             <div class="todo-bottom">
                 <div class="button-group">
                 <a href = "created">
@@ -32,7 +36,6 @@
         <p class='info'>클릭시 수정</p>
        
     </div>
-    	<th:block layout:fragment="script">
 <script th:inline="javascript">
 var errorMessage1 = [[${param.errorMessage}]]; //get방식의 데이터를 가져올 수 있다.
 var errorMessage2 = [[${errorMessage}]];	//post방식의 데이터를 가져올 수 있다.
@@ -55,6 +58,4 @@ if (errorMessage2 != null){
 		f.submit();
 	}
 </script>
-</th:block>
-</body>
 </html>

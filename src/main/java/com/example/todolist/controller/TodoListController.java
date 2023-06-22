@@ -33,17 +33,17 @@ public class TodoListController {
 
 	@RequestMapping(value ="/created", method = RequestMethod.GET)
 	public String created() {
-		return "bbs/created";
+		return "bbs/created"; 
 	}
 	
-	@RequestMapping(value = "/created", method = RequestMethod.POST)
+	@RequestMapping(value ="/created", method = RequestMethod.POST)
 	public String createdOk(TodoList todolist, HttpServletRequest request, Model model) {
 	 try {
 		int maxNum = todolistService.maxNum();
 		
 		todolist.setNum(maxNum +1);
 		
-		todolistService.insertDate(todolist);
+		todolistService.insertData(todolist);
 		
 	} catch (Exception e) {
 		e.printStackTrace();
@@ -53,24 +53,28 @@ public class TodoListController {
 	}
 	
 	@RequestMapping(value ="/list", method = {RequestMethod.GET, RequestMethod.POST})
-	public String list(TodoList todolist,  HttpServletRequest request, Model model) {
+	public String list(TodoList todolist,HttpServletRequest request, Model model) {
 		try {
-			String pageNum = request.getParameter("pageNum");
-			int currentPage = 1;
+			String pageNum = request.getParameter("pageNum"); //바뀌는 페이지 번호
+			int currentPage = 1; //현재 페이지 번호(디폴트는 1)
 			
 			if(pageNum != null) currentPage = Integer.parseInt(pageNum);
 			
-			String searchKey = request.getParameter("searchKey");
-			String searchValue = request.getParameter("searchValue");
+			String searchKey = request.getParameter("searchKey");	//검색 키워드(subject, content, name)
+			String searchValue = request.getParameter("searchValue"); //검색어
 			
 			if(searchValue == null) {
-				searchKey = "subject";
-				searchValue = "";
-			} else {
+				searchKey = "subject"; // 검색 키워드의 디폴트는 subject
+				searchValue = "";	  //검색어의 디폴트는 빈문자열
+			}else {
 				if(request.getMethod().equalsIgnoreCase("GET")) {
+					//get 방식으로 request가 왔다면 
+					//쿼리 파라메터의 값()을 디코딩해준다.
 					searchValue = URLDecoder.decode(searchValue, "UTF-8");
+					
 				}
 			}
+			
 			int dataCount = todolistService.getDataCount(searchKey, searchValue);
 			
 			int numPerPage = 5;
@@ -145,4 +149,6 @@ public class TodoListController {
 		}
 		return "bbs/article";
 	}
+	
+
 }

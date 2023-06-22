@@ -20,7 +20,7 @@ public class TodoListServiceImpl implements TodoListService{
 	}
 
 	@Override
-	public void insertDate(TodoList todolist) throws Exception {
+	public void insertData(TodoList todolist) throws Exception {
 		todolistMapper.insertData(todolist);
 	}
 

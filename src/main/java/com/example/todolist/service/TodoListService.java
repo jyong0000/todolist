@@ -7,7 +7,7 @@ import com.example.todolist.dto.TodoList;
 public interface TodoListService {
 	public int maxNum() throws Exception;
 
-	public void insertDate(TodoList todolist) throws Exception;
+	public void insertData(TodoList todolist) throws Exception;
 
 	public int getDataCount(String searchKey, String searchValue) throws Exception;
 
