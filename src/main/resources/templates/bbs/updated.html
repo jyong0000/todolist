@@ -2,71 +2,81 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout}">
-<title>Insert title here</title>
 <th:block layout:fragment="css">
-<link rel="stylesheet" type="text/css" href="css/created.css"/>
+	<link rel="stylesheet" type="text/css" href="css/created.css" />
 </th:block>
 
-<div layout:fragment="content" id = "bbs">
-		<form action="/updated_ok" method="post" name="myForm">
-	<div id="bbsCreated">
-		<div class="bbsCreated_bottomLine">
-			<dl>
-				<dt>제&nbsp;&nbsp;&nbsp;&nbsp;목</dt>
-				<dd>
-				<input type="text" name="subject" size="60" 
-				maxlength="100"  th:value="${todolist.subject}" class="boxTF"/>
-				</dd>
-			</dl>
-		
-				
-		<div class="bbsCreated_bottomLine">
-			<dl>
-				<dt>작 성 자</dt>
-				<dd>
-				<input type="text" name="name" size="35" 
-				maxlength="20" th:value="${todolist.name}" class="boxTF"/>
-				</dd>
-			</dl>		
-		</div>
-		
-			
-		<div id="bbsCreated_content">
-			<dl>
-				<dt>내&nbsp;&nbsp;&nbsp;&nbsp;용</dt>
-				<dd>
-				<textarea rows="12" cols="63" name="content"
-				th:text="${todolist.content}" class="boxTA"></textarea>
-				</dd>
-			</dl>
-		</div>
-		
-			
-		<div class="bbsCreated_noLine">
-			<dl>
-				<dt>패스워드</dt>
-				<dd>
-				<input type="password" name="pwd" size="35" 
-				maxlength="7" th:value="${todolist.pwd}" class="boxTF"/>
-				&nbsp;(게시물 수정 및 삭제시 필요!!)
-				</dd>
-			</dl>		
-		</div>	
-	</div>
-	</div>
-	<div id="bbsCreated_footer">
-		<input type="hidden" name="num" th:value="${todolist.num}"/>
-		<input type="hidden" name="pageNum" th:value="${pageNum}"/>
-		<input type="hidden" name="seatchKey" th:value="${seatchKey}"/>
-		<input type="hidden" name="searchValue" th:value="${seatchValue}"/>
+<div layout:fragment="content" id="bbs">
+	<form action="/updated_ok" method="post" name="myForm">
+		<div id="bbsCreated">
+			<div class="bbsCreated_bottomLine">
+				<dl>
+					<dt>제&nbsp;&nbsp;&nbsp;&nbsp;목</dt>
+					<dd>
+						<input type="text" name="subject" size="60" maxlength="100"
+							th:value="${todolist.subject}" class="boxTF" />
+					</dd>
+				</dl>
 
-		<input type="button" value=" 수정하기 " class="btn2" onclick="sendIt();" />
-		<input type="button" value=" 수정취소 " class="btn2" th:onclick="|location.href='list?@{${params}}'|"> 
-	</div>
+
+				<div class="bbsCreated_bottomLine">
+					<dl>
+						<dt>작 성 자</dt>
+						<dd>
+							<input type="text" name="name" size="35" maxlength="20"
+								th:value="${todolist.name}" class="boxTF" />
+						</dd>
+					</dl>
+				</div>
+
+
+				<div id="bbsCreated_content">
+					<dl>
+						<dt>내&nbsp;&nbsp;&nbsp;&nbsp;용</dt>
+						<dd>
+							<textarea rows="12" cols="63" name="content"
+								th:text="${todolist.content}" class="boxTA"></textarea>
+						</dd>
+					</dl>
+				</div>
+
+
+				<div class="bbsCreated_noLine">
+					<dl>
+						<dt>패스워드</dt>
+						<dd>
+							<input type="password" name="pwd" size="35" maxlength="7"
+								th:value="${todolist.pwd}" class="boxTF" /> &nbsp;(일정 수정 및 삭제시
+							필요!!)
+						</dd>
+					</dl>
+				</div>
+				
+				<div class="bbsCreated_bottomLine">
+					<dl>
+						<dt>마 감 일</dt>
+						<dd>
+							<input type="text" name="dd" size="35" maxlength="20"
+								th:value="${todolist.dd}" class="boxTF" />
+						</dd>
+					</dl>
+				</div>
+
+			</div>
+		</div>
+		<div id="bbsCreated_footer">
+			<input type="hidden" name="num" th:value="${todolist.num}"/>
+			 <input type="hidden" name="pageNum" th:value="${pageNum}"/>
+			  <input type="hidden" name="seatchKey" th:value="${seatchKey}" /> 
+				<input type="hidden" name="searchValue" th:value="${seatchValue}" /> 
+				<input type="button" value=" 수정하기 " class="btn2" onclick="sendIt();"/>
+				 <input	type="button" value=" 수정취소 " class="btn2" th:onclick="|location.href='list?@{${params}}'|">
+		</div>
 	</form>
-</div>	
+</div>
+
 <th:block layout:fragment="script">
-		<script th:inline="javascript">
+	<script th:inline="javascript">
 		var errorMessage = [[${errorMessage}]];
 		if(errorMessage != null){
 		    alert(errorMessage);
@@ -90,18 +100,7 @@
 				f.name.focus();
 				return;
 			}
-			
-			str = f.email.value;
-			str = str.trim();
-			
-			if(str){
-				if(!isValidEmail(str)){
-					alert("정상적인 이메일을 입력하세요!")
-					f.email.focus();
-					return;
-				}
-			}
-			
+						
 			str = f.content.value;
 			str = str.trim();
 			
@@ -123,5 +122,5 @@
 			f.submit();
 		}
 		</script>
-		</th:block>
+</th:block>
 </html>

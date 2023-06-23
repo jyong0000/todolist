@@ -41,9 +41,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<update id="updateData" parameterType="TodoList">
-		update todolist set
-		name=#{name}, pwd=#{pwd}, subject=#{subject}, content= #{content}, dd=#{dd}
-		where num = #{num}
+	update todolist set name=#{name}, pwd=#{pwd} , subject=#{subject} , content=#{content},
+	dd=#{dd} where num=#{num}
+	 
 	</update>
 
 	<delete id="deleteData" parameterType="int">

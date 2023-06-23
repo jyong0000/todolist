@@ -171,7 +171,6 @@ public class TodoListController {
 			
 			String param = "pageNum=" + pageNum;			
 			if(searchValue != null && !searchValue.equals("")) {
-				//검색어가 있다면
 				param += "&searchKey=" + searchKey;
 				param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8"); //컴퓨터의 언어로 인코딩
 			}
@@ -187,6 +186,7 @@ public class TodoListController {
 		}
 		return "bbs/updated"; 
 	}
+	
 	@RequestMapping(value = "/updated_ok", method = RequestMethod.POST)
 	public String updatedOK(TodoList todolist, HttpServletRequest request, Model model) {
 		String pageNum = request.getParameter("pageNum"); 
@@ -214,5 +214,36 @@ public class TodoListController {
 		}
 			return "redirect:/list" + param;
 	}
-
+	
+	@RequestMapping(value = "/deleted_ok", method= {RequestMethod.GET})
+	public String deleteOK(HttpServletRequest request, Model model) {
+		int num = Integer.parseInt(request.getParameter("num"));
+		String pageNum = request.getParameter("pageNum");
+		String searchKey = request.getParameter("searchKey"); 
+		String searchValue = request.getParameter("searchValue"); 
+		String param = "?pageNum=" + pageNum;
+		
+		try {
+			todolistService.deleteData(num);
+			
+			
+			if(searchValue != null && !searchValue.equals("")) {
+				//검색어가 있다면
+				param += "&searchKey=" + searchKey;
+				param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8"); //컴퓨터의 언어로 인코딩
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			try {
+				param += "&errorMessage=" + URLEncoder.encode("게시글 삭제 중 에러가 발생했습니다.", "UTF-8");
+			} catch (UnsupportedEncodingException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
+		return "redirect:/list" + param;
+	}
 }
