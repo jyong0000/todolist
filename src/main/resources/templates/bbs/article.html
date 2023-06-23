@@ -1,10 +1,66 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-</head>
-<body>
 
-</body>
+<th:block layout:fragment="css">
+	<link rel="stylesheet" type="text/css" href="css/article.css" />
+</th:block>
+<div layout:fragment="content" id="bbs">
+
+	<div id="bbsArticle">
+		<p th:if="${#strings.isEmpty(errorMessage)}"
+			th:text="${todolist.subject}"></p>
+	</div>
+
+	<div class="bbsArticle_bottomLine">
+		<dl>
+			<dt class="tn">작성자</dt>
+			<dd th:if="${#strings.isEmpty(errorMessage)}"
+				th:text=${todolist.name} class="dtn"></dd>
+
+		</dl>
+	</div>
+	
+	<div class="bbsArticle_bottomLine">
+		<dl>
+			<dt>마감일</dt>
+			<dd th:if="${#strings.isEmpty(errorMessage)}"
+				th:text=${todolist.dd}></dd>
+		</dl>
+	</div>
+	
+	<div id="bbsArticle_content">
+			<table width="600" border="0">
+			<tr>
+				<td style="padding-left: 20px 80px 20px 62px;" 
+				valign="top" height="200" >
+				<textarea rows="12" cols="82" name="content"
+				style="border: none"
+				class="boxTA" th:if="${#strings.isEmpty(errorMessage)}" th:text=${todolist.content}></textarea>
+				</td>
+			</tr>			
+			</table>
+		</div>
+		</div>
+		<div class="bbsArticle_noLine" style="text-align: right">
+			<div id="bbsArticle_footer">
+		<div id="leftFooter">
+			<input type="button" value=" 수정 " class="btn2"
+			th:if="${#strings.isEmpty(errorMessage)}"
+			th:onclick ="|location.href='updated?num=@{${todolist.num}}&@{${params}}'|" />
+			<input type="button" value=" 삭제 " class="btn2" 
+			th:if="${#strings.isEmpty(errorMessage)}"
+			th:onclick ="|location.href='deleted_ok?num=@{${todolist.num}}&@{${params}}'|" />
+		</div>
+		<div id="rightFooter">
+			<input type="button" value=" 리스트 " class="btn2"
+			th:if="${#strings.isEmpty(errorMessage)}" 
+			th:onclick="|location.href='list?@{${params}}'|"/>
+		</div>	
+	</div>
+	</div>
+	
 </html>

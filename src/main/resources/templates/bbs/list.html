@@ -20,11 +20,7 @@
                     <button class="delBtn">x</button>
                 </li>
 		</ul>
-			<tr th:if="${#lists.size(dataCount)} > 0"
-				th:each="dataCount:${dataCount}">
-				<td colspan="5" id="footer"><a th:utext="${pageIndexList}"></a>
-				</td>
-			</tr>
+			
             <div class="todo-bottom">
                 <div class="button-group">
                 <a href = "created">

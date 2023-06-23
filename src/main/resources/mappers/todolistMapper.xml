@@ -12,9 +12,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<insert id="insertData" parameterType="TodoList">
-		insert into todolist
-		values(#{num}, #{name}, #{pwd},
-		#{subject}, #{content}, #{dd})
+		 insert into todolist values ( 
+		 #{num}, #{name}, #{pwd}, #{subject}, #{content},#{dd}
+		 )
 	</insert>
 
 	<select id="getDataCount" parameterType="map" resultType="int">
@@ -42,7 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<update id="updateData" parameterType="TodoList">
 		update todolist set
-		name=#{name}, pwd=#{pwd}, subject=#{subject}, content= #{content}
+		name=#{name}, pwd=#{pwd}, subject=#{subject}, content= #{content}, dd=#{dd}
 		where num = #{num}
 	</update>
 

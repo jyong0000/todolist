@@ -1,6 +1,7 @@
 package com.example.todolist.controller;
 
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.List;
@@ -150,5 +151,68 @@ public class TodoListController {
 		return "bbs/article";
 	}
 	
+	@RequestMapping(value ="/updated", method = RequestMethod.GET)
+	public String updated(HttpServletRequest request, Model model) {
+		try {
+			int num = Integer.parseInt(request.getParameter("num"));
+			String pageNum = request.getParameter("pageNum");
+			String searchKey = request.getParameter("searchKey");
+			String searchValue = request.getParameter("searchValue");
+			
+			if(searchValue != null) {
+				searchValue = URLDecoder.decode(searchValue, "UTF-8");
+			}
+			
+			TodoList todolist = todolistService.getReadData(num);
+			
+			if(todolist == null) {
+				return "redirect:/list?pageNum=" + pageNum;
+			}
+			
+			String param = "pageNum=" + pageNum;			
+			if(searchValue != null && !searchValue.equals("")) {
+				//검색어가 있다면
+				param += "&searchKey=" + searchKey;
+				param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8"); //컴퓨터의 언어로 인코딩
+			}
+			
+			model.addAttribute("todolist", todolist);
+			model.addAttribute("pageNum", pageNum);
+			model.addAttribute("params", param);
+			model.addAttribute("searchKey", searchKey);
+			model.addAttribute("searchValue", searchValue);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "bbs/updated"; 
+	}
+	@RequestMapping(value = "/updated_ok", method = RequestMethod.POST)
+	public String updatedOK(TodoList todolist, HttpServletRequest request, Model model) {
+		String pageNum = request.getParameter("pageNum"); 
+		String searchKey = request.getParameter("searchKey"); 
+		String searchValue = request.getParameter("searchValue"); 
+		String param = "?pageNum=" + pageNum;
+		
+		try {
+			todolist.setContent(todolist.getContent().replaceAll("<br/>", "\r\n"));
+			todolistService.updateData(todolist);
+			
+			if(searchValue != null && !searchValue.equals("")) {
+				param += "&searchKey=" + searchKey;
+				param += "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8"); 
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			try {
+				param += "&errorMessage=" + URLEncoder.encode("게시글 수정 중 에러가 발생했습니다.", "UTF-8");
+			} catch (UnsupportedEncodingException e1) {
+				e1.printStackTrace();
+			}
+		}
+			return "redirect:/list" + param;
+	}
 
 }
