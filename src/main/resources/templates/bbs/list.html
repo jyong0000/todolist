@@ -1,56 +1,61 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" type="text/css" href="css/list.css"/>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/list.css">
-    
-    <title>TODO-List</title>
+<link rel="stylesheet" type="text/css" href="css/list.css" />
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/list.css">
 
-    <div class="todo-wrapper">
-        <div class="todo-title">Todo-list</div>
-        <div class="todo-box">   
-            <ul class="todo-list">
-                <li class="todo-item">
-                   <div class="todo" th:if="${#lists.size(lists)}>0" th:each="todolist:${lists}"
-                   >
-                 <a th:href="|@{${articleUrl}}&num=@{${todolist.num}}|" th:text="${todolist.subject}"></a>
-                   </div>
-                </li>
-		</ul>
-			
-            <div class="todo-bottom">
-                <div class="button-group">
-                <a href = "created">
-                <button class="clear-completed-btn">추가하기</button>      
-                </a>
-                </div>
-            </div>
-        </div>
-        <p class='info'>클릭시 수정</p>
-       
+<title>TODO-List</title>
+
+<div class="todo-wrapper">
+  <div class="todo-title">Todo-list</div>
+  <div class="todo-box">
+<ul class="todo-list">
+  <li class="todo-item" th:each="todolist, iterStat:${lists}" th:if="${iterStat.index < 5}">
+    <div class="todo">
+      <a th:href="|@{${articleUrl}}&num=${todolist.num}|" th:text="${todolist.subject}"></a>
     </div>
+  </li>
+</ul>
+
+    <div class="todo-bottom">
+      <div class="button-group">
+        <a href="created">
+          <button class="clear-completed-btn">추가하기</button>
+        </a>
+      </div>
+    </div>
+  </div>
+  <p class='info'>클릭시 수정</p>
+
+  <!-- 페이징 버튼 -->
+  <div class="pagination">
+    <a th:utext="${pageIndexList}"></a>
+  </div>
+</div>
+
 <script th:inline="javascript">
-var errorMessage1 = [[${param.errorMessage}]]; //get방식의 데이터를 가져올 수 있다.
-var errorMessage2 = [[${errorMessage}]];	//post방식의 데이터를 가져올 수 있다.
-if (errorMessage1 != null){
-	alert(errorMessage1);
-}
-if (errorMessage2 != null){
-	alert(errorMessage2);
-}
-	function sendIt() {
-		var f = document.searchForm;
-		var str = f.searchValue.value;
-		str = str.trim(); 
-		
-		if(!str){
-			alert("검색어를 입력하세요.");
-			f.searchValue.focus();
-			return;
-		}
-		f.submit();
-	}
+  var errorMessage1 = [[${param.errorMessage}]];
+  var errorMessage2 = [[${errorMessage}]];
+  if (errorMessage1 != null) {
+    alert(errorMessage1);
+  }
+  if (errorMessage2 != null) {
+    alert(errorMessage2);
+  }
+  function sendIt() {
+    var f = document.searchForm;
+    var str = f.searchValue.value;
+    str = str.trim();
+
+    if (!str) {
+      alert("검색어를 입력하세요.");
+      f.searchValue.focus();
+      return;
+    }
+    f.submit();
+  }
 </script>
+
 </html>

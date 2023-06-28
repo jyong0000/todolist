@@ -4,6 +4,14 @@ String.prototype.trim = function() {
 		return this.replace(TRIM_PATTERN, "");
 };
 
+// E-Mail 검사
+function isValidEmail(email) {
+	var format = /^((\w|[\-\.])+)@((\w|[\-\.])+)\.([A-Za-z]+)$/;
+    if (email.search(format) != -1)
+        return true; //올바른 포맷 형식
+    return false;
+}
+
 // 한글 필터링
 function isValidKorean(data){
      // UTF-8 코드 중 AC00부터 D7A3 값이지 검사

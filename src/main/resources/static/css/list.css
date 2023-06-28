@@ -70,13 +70,12 @@ button {
 
 .todo-item {
     position: relative;
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
-    height: 3rem;
+    align-items: flex-start;
+    height: auto;
     border-bottom: 1px solid #ddd;
+    list-style-type: none;
 }
 
 .todo-item:hover .delBtn {
